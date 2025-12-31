@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { Magazine, Page, BrandKit, MagazineElement } from '../types';
 import { ICONS, STYLE_PRESETS, INITIAL_BRAND_KIT } from '../constants';
-import { analyzeContentForLayout, processPdfPageWithAI, detectPdfLayout } from '../services/geminiService';
+import { analyzeContentForLayout, processPdfPageWithAI } from '../services/geminiService';
 import * as pdfjsLib from 'pdfjs-dist';
 
 // Initialize PDF.js worker
@@ -271,19 +271,30 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
                     </div>
                   </div>
                 ) : (
-                  <div>
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6 block">Visual Style</label>
-                    <div className="grid grid-cols-2 gap-4">
-                      {STYLE_PRESETS.map(s => (
-                        <button 
-                         key={s.id}
-                         onClick={() => setStyle(s.id)}
-                         className={`p-6 rounded-[2rem] border-2 text-left transition-all ${style === s.id ? 'border-blue-600 bg-blue-50/50 shadow-lg scale-105 z-10' : 'border-slate-50 hover:border-slate-200'}`}
-                        >
-                          <h4 className="font-bold text-base mb-1 text-slate-800">{s.name}</h4>
-                          <p className="text-[10px] text-slate-500 leading-relaxed uppercase tracking-wider font-medium">{s.description}</p>
-                        </button>
-                      ))}
+                  <div className="space-y-8">
+                    <div>
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 block">Content</label>
+                      <textarea
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                        placeholder="Paste your article text, product descriptions, or any content you want to transform into a magazine layout..."
+                        className="w-full border-2 border-slate-100 rounded-[2rem] p-6 text-sm min-h-[140px] focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all bg-white font-medium leading-relaxed placeholder:text-slate-300 resize-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6 block">Visual Style</label>
+                      <div className="grid grid-cols-2 gap-4">
+                        {STYLE_PRESETS.map(s => (
+                          <button
+                           key={s.id}
+                           onClick={() => setStyle(s.id)}
+                           className={`p-6 rounded-[2rem] border-2 text-left transition-all ${style === s.id ? 'border-blue-600 bg-blue-50/50 shadow-lg scale-105 z-10' : 'border-slate-50 hover:border-slate-200'}`}
+                          >
+                            <h4 className="font-bold text-base mb-1 text-slate-800">{s.name}</h4>
+                            <p className="text-[10px] text-slate-500 leading-relaxed uppercase tracking-wider font-medium">{s.description}</p>
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}
