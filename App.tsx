@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ViewMode, Magazine, Page, MagazineElement } from './types';
 import Onboarding from './components/Onboarding';
 import Editor from './components/Editor';
+import MagazineReaderDemo from './components/MagazineReaderDemo';
 import { ICONS } from './constants';
 
 const BASE_WIDTH = 550;
@@ -86,8 +87,17 @@ const App: React.FC = () => {
     }
   };
 
+  // Check URL hash for demo mode
+  useEffect(() => {
+    if (window.location.hash === '#demo') {
+      setView('demo' as ViewMode);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50 selection:bg-blue-500 selection:text-white font-sans overflow-x-hidden">
+      {view === 'demo' && <MagazineReaderDemo />}
+
       {view === 'onboarding' && (
         <Onboarding onComplete={handleOnboardingComplete} />
       )}
