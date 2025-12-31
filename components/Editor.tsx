@@ -47,7 +47,7 @@ const Editor: React.FC<EditorProps> = ({ magazine, setMagazine, onPreview }) => 
   useEffect(() => {
     const firstPageInSpread = magazine.pages.findIndex(p => p.id === activeSpread[0]?.id);
     if (firstPageInSpread !== -1) setActivePageIndex(firstPageInSpread);
-  }, [currentSpreadIndex]);
+  }, [currentSpreadIndex, magazine.pages, activeSpread]);
 
   const selectedElement = magazine.pages[activePageIndex]?.elements.find(e => e.id === selectedElementId);
 
@@ -545,12 +545,11 @@ const Editor: React.FC<EditorProps> = ({ magazine, setMagazine, onPreview }) => 
                          </div>
                          <div className="flex-1 overflow-y-auto grid grid-cols-1 gap-4 custom-scrollbar pb-10">
                             {spreads.map((spread, sIdx) => (
-                              <button 
+                              <button
                                 key={sIdx}
                                 onClick={() => {
                                   updateElement(activePageIndex, selectedElement.id, { action: { type: 'page', value: sIdx.toString() } });
                                   setShowSpreadPicker(false);
-                                  setCurrentSpreadIndex(sIdx); // Temp jump to confirm
                                 }}
                                 className={`group p-4 rounded-3xl border-2 transition-all flex flex-col gap-3 ${selectedElement.action?.value === sIdx.toString() ? 'border-blue-600 bg-blue-50' : 'border-slate-100 hover:border-slate-300 hover:bg-slate-50'}`}
                               >
