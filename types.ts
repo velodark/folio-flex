@@ -42,4 +42,4 @@ export interface BrandKit {
   logo?: string;
 }
 
-export type ViewMode = 'onboarding' | 'editor' | 'preview' | 'publishing';
+export type ViewMode = 'onboarding' | 'editor' | 'preview' | 'publishing' | 'demo';
